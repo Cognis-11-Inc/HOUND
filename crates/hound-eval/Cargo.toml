@@ -1,0 +1,8 @@
+[package]
+name = "hound-eval"
+description = "Separate HOUND evaluator for hidden ground truth and hunting metrics"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+publish.workspace = true

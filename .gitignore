@@ -1,0 +1,38 @@
+# Desktop metadata
+.directory
+.DS_Store
+
+# Rust
+/target/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+/learning/build/
+/learning/dist/
+
+# Local credentials and environment overrides
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Generated captures, datasets, evaluator answers, and model weights
+/artifacts/*
+!/artifacts/README.md
+*.pcap
+*.pcapng
+*.pt
+*.pth
+*.safetensors
+
+# Editor and temporary files
+*.swp
+*~

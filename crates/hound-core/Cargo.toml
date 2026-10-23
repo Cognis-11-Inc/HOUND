@@ -1,0 +1,8 @@
+[package]
+name = "hound-core"
+description = "HOUND hunter core: sensing, investigation, evidence, and truth maintenance"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+publish.workspace = true

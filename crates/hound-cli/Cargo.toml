@@ -1,0 +1,11 @@
+[package]
+name = "hound-cli"
+description = "Command-line entry point for the HOUND hunter"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+[dependencies]
+hound-core.workspace = true
