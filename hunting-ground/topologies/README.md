@@ -1,4 +1,6 @@
 # Network topologies
 
-Reserved for isolated network definitions and reproducible topology generation.
-HOUND-001 requires a legitimate route and a misleading route, with varied layouts.
+Root `compose.yaml` currently fixes both candidate sources (`node-a`, `node-b`)
+to the chain `node-c -> node-d -> node-e` on an internal network. The source role
+varies privately. Alternative routes, generated layouts, and decoy branches remain
+work for the full HOUND-001 milestone.

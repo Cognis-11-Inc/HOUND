@@ -1,0 +1,98 @@
+name: hound001a
+
+x-restricted: &restricted
+  user: "10001:10001"
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  pids_limit: 64
+  mem_limit: 128m
+  cpus: 0.5
+  tmpfs: ["/tmp:size=16m,mode=1777"]
+
+x-lab: &lab
+  <<: *restricted
+  image: hound001a-lab:local
+  build:
+    context: .
+    dockerfile: hunting-ground/containers/Dockerfile.lab
+
+x-sensor: &sensor
+  <<: *lab
+  networks: [terrain]
+  healthcheck:
+    test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=2).read()"]
+    interval: 2s
+    timeout: 3s
+    retries: 15
+    start_period: 2s
+
+services:
+  node-c:
+    <<: *sensor
+    command: [serve, --node, node-c, --next, "http://node-d:8080/ingest"]
+  node-d:
+    <<: *sensor
+    command: [serve, --node, node-d, --next, "http://node-e:8080/ingest"]
+  node-e:
+    <<: *sensor
+    command: [serve, --node, node-e]
+  setup:
+    <<: *lab
+    profiles: [tools]
+    network_mode: none
+    command: [init]
+    environment:
+      HOUND_SCENARIO_SEED: ${HOUND_SCENARIO_SEED:-}
+    volumes:
+      - scenario:/scenario
+  node-a:
+    <<: *lab
+    profiles: [tools]
+    networks: [terrain]
+    command: [source, --node, node-a, --next, "http://node-c:8080/ingest", --hold]
+    healthcheck:
+      test: [CMD, test, -f, /tmp/traffic.done]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+    volumes:
+      - scenario:/scenario:ro
+  node-b:
+    <<: *lab
+    profiles: [tools]
+    networks: [terrain]
+    command: [source, --node, node-b, --next, "http://node-c:8080/ingest", --hold]
+    healthcheck:
+      test: [CMD, test, -f, /tmp/traffic.done]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+    volumes:
+      - scenario:/scenario:ro
+  hound:
+    <<: *restricted
+    profiles: [tools]
+    image: hound001a-hunter:local
+    build:
+      context: .
+      dockerfile: hunting-ground/containers/Dockerfile.hound
+    networks: [terrain]
+    volumes:
+      - evidence:/evidence
+  evaluator:
+    <<: *lab
+    profiles: [tools]
+    network_mode: none
+    command: [evaluate]
+    volumes:
+      - scenario:/scenario:ro
+      - evidence:/evidence:ro
+
+networks:
+  terrain:
+    internal: true
+
+volumes:
+  scenario:
+  evidence:

@@ -1,5 +1,13 @@
 # Integration tests
 
-Reserved for real laboratory runs, sensor/action exchange, truth-maintenance
-behavior, evaluator isolation, and baseline attribution checks. Implement these
-alongside HOUND-001; the scaffold currently has no integration tests.
+Build `cargo build --locked -p hound-cli`, then run:
+
+```sh
+python3 -m unittest discover -s tests/integration -p 'test_*.py' -v
+```
+
+These tests launch separate HTTP processes on loopback. They check actual
+forwarding, CLI collection, provenance, deduplication, absent ground-truth routes,
+partial-failure behavior, and empty environments. They do not prove container
+isolation. `bash scripts/test-compose.sh` additionally exercises the Compose
+containers and the boundary probe in HOUND's own runtime context.

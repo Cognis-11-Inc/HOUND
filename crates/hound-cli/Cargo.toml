@@ -9,3 +9,7 @@ publish.workspace = true
 
 [dependencies]
 hound-core.workspace = true
+
+[[bin]]
+name = "hound"
+path = "src/main.rs"

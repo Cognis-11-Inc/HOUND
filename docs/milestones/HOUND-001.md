@@ -1,6 +1,8 @@
 # HOUND-001 — The Hunting Ground
 
-**Status: planned.** The initial scaffold does not satisfy this milestone.
+**Status: in progress.** HOUND-001A implements first HTTP observation collection;
+the full HOUND-001 milestone remains incomplete. See [architecture](../ARCHITECTURE.md)
+and [verification](../verification/HOUND-001A.md).
 
 ## Objective
 
@@ -10,13 +12,15 @@ origin without receiving the answer.
 
 ## Definition of done
 
-- [ ] Reproducible, isolated machines or containers exchange real protocol traffic.
+- [x] Reproducible, isolated containers exchange real protocol traffic (Compose on
+      rootless Podman verified; Docker Engine validation remains pending).
 - [ ] The environment includes several hosts/relays, a legitimate route, a
       misleading route, and a simulated intrusion trail.
-- [ ] A Rust hunter gathers observations through authorized investigation.
+- [x] A Rust hunter gathers observations through authorized sensor queries.
 - [ ] A deterministic baseline attempts source attribution from visible evidence.
 - [ ] Observations, inferences, and hypotheses remain distinct and traceable.
-- [ ] A separate evaluator holds ground truth that the hunter cannot inspect.
+- [x] A separate delivery evaluator holds private ground truth outside HOUND's
+      mounts/network interfaces; tested within the documented trust boundary.
 - [ ] Test scenarios vary the origin and network topology.
 - [ ] Results measure attribution accuracy, false accusations, investigation cost,
       calibration, and justified uncertainty.

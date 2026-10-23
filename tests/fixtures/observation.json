@@ -1,0 +1,9 @@
+{
+  "observation_id": "node-c:fixture-instance:1",
+  "sensor_id": "node-c",
+  "timestamp_unix_ms": 1792771200000,
+  "event": {"protocol": "http", "method": "POST", "path": "/ingest", "message_id": "fixture-message", "operation": "probe", "payload_bytes": 53},
+  "source_endpoint": {"address": "172.20.0.2", "port": 45000},
+  "destination_endpoint": {"address": "172.20.0.4", "port": 8080},
+  "provenance": {"capture_method": "http_server_receive", "sensor_instance": "fixture-instance", "sequence": 1}
+}

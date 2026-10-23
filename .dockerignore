@@ -1,0 +1,9 @@
+.git
+.directory
+target
+artifacts
+.venv
+**/__pycache__
+**/*.pyc
+.env*
+learning
